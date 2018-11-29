@@ -14,11 +14,14 @@ cache:
 
 matrix:
   include:
-  - env: BUILD=stack ARGS="--resolver lts-6"
-    compiler: ": #stack ghc 7.10.3"
+  - env: BUILD=stack ARGS="--resolver lts-9.21"
+    compiler: ": #stack ghc 8.0.2"
     addons: {apt: {packages: [libgmp,libgmp-dev]}}
-  - env: BUILD=stack ARGS="--resolver lts-7"
-    compiler: ": #stack ghc 8.0.1"
+  - env: BUILD=stack ARGS="--resolver lts-11.22"
+    compiler: ": #stack ghc 8.2.2"
+    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+  - env: BUILD=stack ARGS="--resolver lts-12.20"
+    compiler: ": #stack ghc 8.4.4"
     addons: {apt: {packages: [libgmp,libgmp-dev]}}
   - env: BUILD=stack ARGS="--resolver nightly"
     compiler: ": #stack nightly"
