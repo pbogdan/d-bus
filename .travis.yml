@@ -16,16 +16,16 @@ matrix:
   include:
   - env: BUILD=stack ARGS="--resolver lts-9.21"
     compiler: ": #stack ghc 8.0.2"
-    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+    addons: {apt: {packages: [libgmp10,libgmp-dev]}}
   - env: BUILD=stack ARGS="--resolver lts-11.22"
     compiler: ": #stack ghc 8.2.2"
-    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+    addons: {apt: {packages: [libgmp10,libgmp-dev]}}
   - env: BUILD=stack ARGS="--resolver lts-12.20"
     compiler: ": #stack ghc 8.4.4"
-    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+    addons: {apt: {packages: [libgmp10,libgmp-dev]}}
   - env: BUILD=stack ARGS="--resolver nightly"
     compiler: ": #stack nightly"
-    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+    addons: {apt: {packages: [libgmp10,libgmp-dev]}}
   allow_failures:
   - env: BUILD=stack ARGS="--resolver nightly"
 
