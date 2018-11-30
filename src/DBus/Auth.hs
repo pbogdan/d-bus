@@ -7,7 +7,10 @@
 
 module DBus.Auth where
 
-import           Control.Monad.Except
+import           Prelude hiding (fail)
+
+import           Control.Monad.Except hiding (fail)
+import           Control.Monad.Fail
 import           Control.Monad.Free
 import qualified Data.Attoparsec.ByteString as AP
 import qualified Data.Attoparsec.ByteString.Char8 as AP8
@@ -131,6 +134,9 @@ newtype SASL a = SASL {unSASL :: ExceptT String (Free SASLF) a}
 instance MonadError String SASL where
     throwError = SASL . throwError
     catchError (SASL m) f = SASL $ catchError m (unSASL . f)
+
+instance MonadFail SASL where
+  fail = throwError
 
 saslSend :: ClientMessage -> SASL ()
 saslSend x = SASL . lift $ Free (Send x (return ()))
