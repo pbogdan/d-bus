@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -39,7 +40,9 @@ flattenRep (x :: t) =
         (t, SCons t' SNil) -> case t %~ t' of
             Proved Refl -> ArgsCons (toRep x) ArgsNil
             Disproved _ -> error "flattenRep: impossible case"
+#if !MIN_VERSION_base(4,12,0)
         _ -> error "flattenRep: impossible case"
+#endif
 
 -- class Representable; see DBus.Types
 forM [2..20] makeRepresentableTuple
