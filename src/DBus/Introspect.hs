@@ -11,7 +11,7 @@ import           Blaze.ByteString.Builder
 import           Control.Applicative ((<$>))
 import           Control.Exception (SomeException)
 import qualified Data.ByteString as BS
-import           Data.Conduit (($$), ($=))
+import           Data.Conduit (runConduit, (.|))
 import           Data.Conduit.List (consume, sourceList)
 import           Data.Data (Data)
 import           Data.Functor.Identity
@@ -169,7 +169,7 @@ xpNode = xpWrap (\(name, (is, ns)) -> INode name is ns)
                           (xpFindMatches xpNode))
 
 xmlToNode :: BS.ByteString -> Either Text INode
-xmlToNode xml = case sourceList [xml] $= parseBytesPos def $$ fromEvents of
+xmlToNode xml = case runConduit $ sourceList [xml] .| parseBytesPos def .| fromEvents of
     Left e -> Left (Text.pack $ show (e :: SomeException))
     Right d -> case unpickle (xpRoot . xpUnliftElems $ xpNode) $ documentRoot d of
         Left e -> Left $ Text.pack (ppUnpickleError e)
@@ -191,9 +191,9 @@ prologue = Prologue { prologueBefore = []
 
 nodeToXml :: INode -> BS.ByteString
 nodeToXml node = toByteString . mconcat . runIdentity $
-                 (sourceList (toEvents doc)
-                  $= renderBuilder def
-                  $$ consume)
+                 runConduit (sourceList (toEvents doc)
+                  .| renderBuilder def
+                  .| consume)
   where
     doc = Document prologue (pickle (xpRoot . xpUnliftElems $ xpNode) node) []
 

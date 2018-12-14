@@ -20,7 +20,7 @@ import           Control.Monad.Fix            (mfix)
 import           Control.Monad.Trans
 import qualified Data.ByteString              as BS
 import qualified Data.ByteString.Lazy.Builder as BS
-import qualified Data.Conduit                 as C
+import qualified Data.Conduit                 as C (awaitForever, runConduit, (.|))
 import qualified Data.Conduit.Binary          as CB
 import           Data.Map                     (Map)
 import qualified Data.Map                     as Map
@@ -304,9 +304,9 @@ connectBusWithAuth transport auth handleCalls handleSignals = do
     conn <- mfix $ \conn' -> do
         debugM "DBus" $ "Forking"
         handlerThread <- forkIO $
-            (CB.sourceHandle h
-                C.$= parseMessages
-                C.$$ (C.awaitForever $ liftIO .
+            (C.runConduit $ CB.sourceHandle h
+                C..| parseMessages
+                C..| (C.awaitForever $ liftIO .
                       handleMessage (handleCalls conn')
                                     (handleSignals conn')
                                     answerSlots
