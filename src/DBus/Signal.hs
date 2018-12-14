@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE OverloadedStrings #-}
 module DBus.Signal where
@@ -9,7 +10,6 @@ import           Control.Monad.Trans
 import           Control.Monad.Writer (fix, tell)
 import qualified Data.List as List
 import           Data.Maybe
-import           Data.Semigroup
 import           Data.Singletons
 import           Data.Singletons.Decide
 import           Data.Singletons.Prelude.List
@@ -17,6 +17,10 @@ import           Data.Text (Text)
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy as TextL
 import qualified Data.Text.Lazy.Builder as TB
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Semigroup
+#endif
 
 import           DBus.Types
 import           DBus.Message

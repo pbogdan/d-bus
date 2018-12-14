@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE EmptyCase #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
@@ -31,7 +32,6 @@ import           Data.List
 import           Data.List (intercalate)
 import           Data.Map (Map)
 import qualified Data.Map as Map
-import           Data.Semigroup hiding (Arg)
 import           Data.Singletons (withSingI)
 import           Data.Singletons.Prelude.Bool
 import           Data.Singletons.Prelude.List hiding (Map)
@@ -43,6 +43,10 @@ import           Data.Typeable (Typeable)
 import           Data.Word
 import           System.Log.Logger
 import           Unsafe.Coerce (unsafeCoerce)
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Semigroup hiding (Arg)
+#endif
 
 dbusLogger :: String
 dbusLogger = "DBus"

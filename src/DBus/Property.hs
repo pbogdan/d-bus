@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
@@ -8,12 +9,15 @@ import           Control.Concurrent.STM
 import qualified Control.Exception as Ex
 import           Control.Monad
 import           Control.Monad.Reader
-import           Control.Monad.Writer
 import qualified Data.Foldable as Foldable
 import qualified Data.Map as Map
 import           Data.Singletons
 import           Data.Text (Text)
 import qualified Data.Text as Text
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 import           DBus.Signal
 import           DBus.Types

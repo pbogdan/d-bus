@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -8,10 +9,13 @@ import           Control.Monad.Catch    (MonadThrow, throwM)
 import           Control.Monad.IO.Class
 import           Control.Monad.Trans    (MonadIO)
 import           Data.Default
-import           Data.Monoid
 import           Data.Singletons
 import qualified Data.Text              as Text
 import           Data.Word
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 import           DBus.Message
 import           DBus.Types

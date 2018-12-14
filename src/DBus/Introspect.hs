@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE DataKinds #-}
@@ -18,8 +19,6 @@ import           Data.Functor.Identity
 import           Data.Map (Map)
 import qualified Data.Map as Map
 import           Data.Maybe
-import           Data.Monoid
-import           Data.Monoid (mconcat)
 import           Data.Singletons
 import           Data.Text (Text)
 import qualified Data.Text as Text
@@ -30,6 +29,10 @@ import           Data.XML.Types
 import           Text.XML.Stream.Parse
 import           Text.XML.Stream.Render
 import           Text.XML.Unresolved (toEvents, fromEvents)
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 import           DBus.Signature
 import           DBus.Types

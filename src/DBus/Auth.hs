@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TypeSynonymInstances #-}
@@ -17,11 +18,14 @@ import qualified Data.Attoparsec.ByteString.Char8 as AP8
 import           Data.Bits
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy.Builder as BS
-import           Data.Monoid
 import           Data.Word
 import           Numeric
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 type Mechanism = BS.ByteString
 

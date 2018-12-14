@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 module DBus.Signature where
 
@@ -9,8 +10,11 @@ import qualified Data.ByteString.Lazy             as BSL
 import qualified Data.ByteString.Lazy.Builder     as BS
 import           Data.Char
 import qualified Data.IntMap                      as IMap
-import           Data.Monoid
 import qualified Data.Text                        as Text
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 import           DBus.Types
 

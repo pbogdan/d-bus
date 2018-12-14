@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE TemplateHaskell #-}
@@ -16,13 +17,16 @@ import qualified Data.ByteString as BS
 import           Data.Char
 import           Data.Default
 import           Data.Maybe (fromMaybe, catMaybes)
-import           Data.Monoid
 import           Data.Singletons
 import           Data.Singletons.Prelude.List
 import           Data.Text (Text)
 import qualified Data.Text as Text
 import           Language.Haskell.TH
 import           Language.Haskell.TH.Syntax
+
+#if !MIN_VERSION_base(4,11,0)
+import           Data.Monoid
+#endif
 
 import           DBus.Introspect
 import           DBus.Types
